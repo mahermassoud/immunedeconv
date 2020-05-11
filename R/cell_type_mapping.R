@@ -99,6 +99,30 @@ map_cell_types = function(use_cell_types, fractions, method_dataset=NULL) {
   do.call("rbind", tmp_res)
 }
 
+
+#' Converts method-specific cell types to controlled vocabulary equivalents
+#'
+#' @param cell_type_list vector of cell types we want CV for. If not found in
+#'                       cell_type_map, returns NULL for that element
+#' @param method method we are converting from
+#' @return vector with CV cell types as names
+#'
+#' @export
+map_cell_type_to_controlled = function(cell_type_list, method) {
+  methods = cell_type_map$method_dataset %>% unique()
+  assert(
+    sprintf("%s not in cell_type_map", method),
+    method %in% methods
+  )
+  
+  sub.map = cell_type_map %>% filter(method_dataset == method)
+  in2cv = as.list(sub.map$cell_type)
+  names(in2cv) = sub.map$method_cell_type
+  out = sapply(cell_type_list, function(mct) in2cv[[mct]])
+  names(out) = NULL
+  return(out)
+}
+
 #' sum up the fraction of all child nodes to a single value.
 #' Take into account which cell types are optional.
 #'
