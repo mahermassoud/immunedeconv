@@ -6,6 +6,7 @@
 #' @name immunedeconv
 #' @import methods
 #' @import dplyr
+#' @import DESeq
 #' @importFrom testit assert
 #' @import readr
 #' @importFrom tibble as_tibble
@@ -252,6 +253,83 @@ deconvolute_cibersort = function(gene_expression_matrix,
   return(res)
 }
 
+#' Deconvolute using eigengene method by Zhang et. al.
+#'
+#' @param gene_expression_matrix m x n matrix (m genes, n samples) of **counts**
+#'   not tpm. rownames must match genes in signature
+#' @param m_signature data.frame with 2 columns gene, cell_type
+#' @param min_count minimum number of reads a gene needs to be considered
+#' @param min_samples_w_count Removes genes where there are less than 
+#'   `min_count_sample[1]` samples with more than `min_count_sample[2]` counts
+#' 
+#' @return 
+#'
+#' @export
+#' TODO finish documentation
+#' TODO option for un-melted signature matrix
+#' TODO add unit tests
+deconvolute_eigengene = function(gene_expression_matrix,
+                                 m_signature, 
+                                 min_count=100,
+                                 min_samples_w_count=c(2,5)) {
+  f_expr = gene_expression_matrix[rowSums(gene_expression_matrix) > min_count,]
+  fake_metadata <- rep("", ncol(f_expr))
+  cds = newCountDataSet(f_expr,  fake_metadata) # TODO need metadata
+  cds = estimateSizeFactors(cds)
+  cds = estimateDispersions(cds, method="blind")
+  vsd = varianceStabilizingTransformation(cds)
+  dat = exprs(vsd)
+  centeredDat = t(scale(t(dat))) # Normalize by genes
+
+  colnames(m_signature)[1] = "gene"
+  colnames(m_signature)[2] = "cell_type"
+  sig_raw = m_signature
+  m_signature <- m_signature[m_signature$gene %in% rownames(f_expr),]
+  tcelllist <- unique(m_signature$cell_type)
+  
+  # results is n_cell_type x n_sample
+  results <- matrix(0, length(tcelllist), ncol(f_expr))
+  # for each cell type
+  for(i in 1:length(tcelllist)) {
+    
+    tcellgenes <- m_signature[m_signature$cell_type == tcelllist[i],]$gene
+    subCount <- f_expr[match(tcellgenes, rownames(f_expr)),]
+    # Remove genes with less than ms samples with more than mc counts
+    ms = min_samples_w_count[1]
+    mc = min_samples_w_count[2]
+    filter <- apply(subCount, 1, function(x) length(x[x > mc]) >= ms)
+    subCount <- subCount[filter,]
+    tcellgenes <- rownames(subCount)
+    
+    if(length(tcellgenes) != 0) {
+      # Get subset of normalized rna-seq 
+      subcenteredDat <- centeredDat[rownames(centeredDat) %in% tcellgenes,]
+      svdRes <- svd(subcenteredDat) # (D, U, V) where X = UDV', U decreasing order
+      #svdRes$v[,1]
+      #table(svdRes$u[,1] > 0)
+      
+      spikeinDat <- cbind(max=apply(subcenteredDat, 1, max), subcenteredDat)
+      svdRes.spikein <- svd(spikeinDat)
+      if(sign(svdRes$v[,1][1])==sign(svdRes.spikein$v[,1][2])) {
+        svdRes$v[,1] = svdRes$v[,1] * sign(svdRes.spikein$v[,1][1])
+      } else {
+        svdRes$v[,1] = svdRes$v[,1] * sign(svdRes.spikein$v[,1][1]) *(-1)
+      }
+      
+      results[i,] <- svdRes$v[,1]
+    } else {
+      results[i,] <- NA
+    }
+  }
+  colnames(results) <- colnames(rnaseq.matrix)
+  rownames(results) <- tcelllist
+  return(results)
+}
+#eg_counts <- read_csv("/Users/massoudmaher/Documents/Code/mb-immune-profiler/data/eg_rna_counts_mat.csv") %>% as.data.frame()
+#rownames(eg_counts) <- eg_counts$gene
+#eg_counts <- eg_counts[,2:ncol(eg_counts)]
+#eg_sig <- read_csv("mb-immune-profiler/data/HP_Massoud/Immune_markers/Markers_784_Cell_reports.csv")[,2:4]
+#eig.res <- deconvolute_eigengene(eg_counts, eg_sig)
 
 #' Annotate unified cell_type names
 #'
