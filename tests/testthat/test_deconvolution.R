@@ -1,4 +1,5 @@
 test_mat = read_tsv("bulk_mat.tsv") %>% as.data.frame() %>% tibble::column_to_rownames("gene_symbol")
+count_test_mat = read_tsv("counts_bulk_mat.tsv") %>% as.data.frame() %>% tibble::column_to_rownames("gene_symbol")
 
 test_that("timer works", {
   res = deconvolute_timer(test_mat, indications=rep("brca", ncol(test_mat)))
@@ -43,6 +44,11 @@ test_that("xcell works", {
   assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
 })
 
+test_that("eigengene works", {
+  res = deconvolute_eigengene(count_test_mat)
+  assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
+})
+
 test_that("xcell works with reduced set of expected cell types", {
   expected_cell_types = c("T cell CD4+", "T cell CD8+", "Myeloid dendritic cell", "Macrophage M1", "Macrophage M2")
   res = deconvolute_xcell(test_mat, arrays=FALSE, expected_cell_types)
@@ -56,7 +62,12 @@ test_that("generic deconvolution works for all methods", {
     # cibersort requires the binary path to be set, n/a in unittest.
     if(!method %in% c("cibersort", "cibersort_abs")) {
       print(paste0("method is ", method))
-      res = deconvolute(test_mat, method, indications=rep("brca", ncol(test_mat)),
+      if(method == "eigengene") {
+        in_mat = count_test_mat
+      } else {
+        in_mat = test_mat
+      }
+      res = deconvolute(in_mat, method, indications=rep("brca", ncol(test_mat)),
                         tumor=TRUE, arrays=FALSE, rmgenes=c("ALB", "ERBB2"),
                         expected_cell_types=c("T cell CD4+", "T cell CD8+", "Macrophage", "NK cell"),
                         scale_mrna=FALSE)
@@ -73,7 +84,12 @@ test_that("generic deconvolution works for all methods, without extra arguments"
     # cibersort requires the binary path to be set, n/a in unittest.
     if(!method %in% c("cibersort", "cibersort_abs")) {
       print(paste0("method is ", method))
-      res = deconvolute(test_mat, method, indications=rep("brca", ncol(test_mat)))
+      if(method == "eigengene") {
+        in_mat = count_test_mat
+      } else {
+        in_mat = test_mat
+      }
+      res = deconvolute(in_mat, method, indications=rep("brca", ncol(test_mat)))
       # matrix has the 'cell type' column -> +1
       assert("matrix dimensions consistent", ncol(res) == ncol(test_mat) + 1)
       assert("cell type column exists", colnames(res)[1] == "cell_type")

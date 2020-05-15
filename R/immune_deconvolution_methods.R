@@ -18,7 +18,8 @@ NULL
 #' List of supported immune deconvolution methods
 #'
 #' The methods currently supported are
-#' `mcp_counter`, `epic`, `quantiseq`, `xcell`, `cibersort`, `cibersort_abs`, `timer`
+#' `mcp_counter`, `epic`, `quantiseq`, `xcell`, `cibersort`, `cibersort_abs`, 
+#' `timer`, `eigengene`
 #'
 #' The object is a named vector. The names correspond to the display name of the method,
 #' the values to the internal name.
@@ -30,7 +31,8 @@ deconvolution_methods = c("MCPcounter"="mcp_counter",
                           "xCell"="xcell",
                           "CIBERSORT"="cibersort",
                           "CIBERSORT (abs.)"="cibersort_abs",
-                          "TIMER"="timer")
+                          "TIMER"="timer",
+                          "eigenGene"="eigengene")
 
 #' Data object from xCell.
 #'
@@ -39,6 +41,12 @@ deconvolution_methods = c("MCPcounter"="mcp_counter",
 #'
 #' @export
 xCell.data = xCell::xCell.data
+
+#' Signature for eigengene
+#'
+#' @export
+eig.sig = read_csv(system.file("extdata", "eigengene/eigengene_melt_signature.csv",
+                      package="immunedeconv"))
 
 #' Set Path to CIBERSORT R script (`CIBERSORT.R`)
 #'
@@ -257,7 +265,9 @@ deconvolute_cibersort = function(gene_expression_matrix,
 #'
 #' @param gene_expression_matrix m x n matrix (m genes, n samples) of **counts**
 #'   not tpm. rownames must match genes in signature
-#' @param m_signature data.frame with 2 columns gene, cell_type
+#' @param m_signature data.frame with 2 columns gene, cell_type. Represents
+#'   which genes are in signature for which cell type. Default: 
+#'   signature from *Charoentong et. al. 2017*
 #' @param min_count minimum number of reads a gene needs to be considered
 #' @param min_samples_w_count Removes genes where there are less than 
 #'   `min_count_sample[1]` samples with more than `min_count_sample[2]` counts
@@ -266,12 +276,17 @@ deconvolute_cibersort = function(gene_expression_matrix,
 #'
 #' @export
 #' TODO finish documentation
-#' TODO option for un-melted signature matrix
 #' TODO add unit tests
+#' TODO move this into its own file and make this function use rlang call
 deconvolute_eigengene = function(gene_expression_matrix,
-                                 m_signature, 
+                                 m_signature=eig.sig, 
                                  min_count=100,
                                  min_samples_w_count=c(2,5)) {
+  # Validity checks
+  assert("min_count must be numeric", is.numeric(min_count))
+  assert("min_samples_w_count must be numeric of length w", 
+         is.numeric(min_samples_w_count) && length(min_samples_w_count) == 2)
+  
   f_expr = gene_expression_matrix[rowSums(gene_expression_matrix) > min_count,]
   fake_metadata <- rep("", ncol(f_expr))
   cds = newCountDataSet(f_expr,  fake_metadata) # TODO need metadata
@@ -321,7 +336,7 @@ deconvolute_eigengene = function(gene_expression_matrix,
       results[i,] <- NA
     }
   }
-  colnames(results) <- colnames(rnaseq.matrix)
+  colnames(results) <- colnames(f_expr)
   rownames(results) <- tcelllist
   return(results)
 }
@@ -410,16 +425,18 @@ deconvolute = function(gene_expression, method=deconvolution_methods,
 
   # run selected method
   res = switch(method,
-         xcell = deconvolute_xcell(gene_expression, arrays=arrays, expected_cell_types=expected_cell_types, ...),
-         mcp_counter = deconvolute_mcp_counter(gene_expression, ...),
-         epic = deconvolute_epic(gene_expression, tumor=tumor, scale_mrna=scale_mrna, ...),
-         quantiseq = deconvolute_quantiseq(gene_expression,
-                                           tumor=tumor, arrays=arrays, scale_mrna=scale_mrna, ...),
-         cibersort = deconvolute_cibersort(gene_expression, absolute = FALSE,
-                                           arrays=arrays, ...),
-         cibersort_abs = deconvolute_cibersort(gene_expression, absolute = TRUE,
-                                               arrays=arrays, ...),
-         timer = deconvolute_timer(gene_expression, indications=indications, ...))
+   xcell = deconvolute_xcell(gene_expression, arrays=arrays, expected_cell_types=expected_cell_types, ...),
+   mcp_counter = deconvolute_mcp_counter(gene_expression, ...),
+   epic = deconvolute_epic(gene_expression, tumor=tumor, scale_mrna=scale_mrna, ...),
+   quantiseq = deconvolute_quantiseq(gene_expression,
+                                     tumor=tumor, arrays=arrays, scale_mrna=scale_mrna, ...),
+   cibersort = deconvolute_cibersort(gene_expression, absolute = FALSE,
+                                     arrays=arrays, ...),
+   cibersort_abs = deconvolute_cibersort(gene_expression, absolute = TRUE,
+                                         arrays=arrays, ...),
+   timer = deconvolute_timer(gene_expression, indications=indications, ...),
+   eigengene = deconvolute_eigengene(gene_expression, ...)
+  )
 
   # convert to tibble and annotate unified cell_type names
   res = res %>%
