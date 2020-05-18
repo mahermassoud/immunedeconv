@@ -12,7 +12,8 @@
 #'     (Gene symbols on the first column and sample IDs on the first row). Expression data must be on non-log scale
 #' @param arrays specifies whether expression data are from microarrays (instead of RNA-seq).
 #'     If TRUE, the "--rmgenes" parameter is set to "none".
-#' @param signame name of the signature matrix. Currently only `TIL10` is available.
+#' @param signame name of the signature matrix or the matrix itself.
+#'   Currently only `TIL10` is available for names. 
 #' @param tumor 	specifies whether expression data are from tumor samples. If TRUE, signature genes
 #'     with high expression in tumor samples are removed.
 #'     Default: FALSE.
@@ -40,6 +41,10 @@ deconvolute_quantiseq.default = function(mix.mat,
                                          rmgenes="unassigned") {
 
   message("\nRunning quanTIseq deconvolution module\n")
+  
+  if(is.numeric(mix.mat[[1,1]])!= TRUE){
+    stop("Wrong format for mixture matrix! Follow documentation.")
+  }
 
   # List of genes to be discarded
   if (rmgenes=="unassigned" && arrays==TRUE) { # For Microarrays
@@ -52,87 +57,76 @@ deconvolute_quantiseq.default = function(mix.mat,
 
   # Files
   listsig<-c("TIL10")
+  if(!is.character(signame)) {
+    sig.provided <- TRUE
+    sig.mat <- signame
+    signame <- "TIL10"
+  }  else {
+    sig.provided <- FALSE
+  }
   if (signame %in% listsig) {
-
-    sig.mat.file <- system.file("extdata", "quantiseq", paste0(signame, "_signature.txt"),
+    sig.mat.file <- system.file("extdata", "quantiseq", 
+                                paste0(signame, "_signature.txt"),
                                 package="immunedeconv", mustWork=TRUE)
-
-    mRNA.file <- system.file("extdata", "quantiseq", paste0(signame, "_mRNA_scaling.txt"),
+    mRNA.file <- system.file("extdata", "quantiseq", 
+                             paste0(signame, "_mRNA_scaling.txt"),
                              package="immunedeconv", mustWork=TRUE)
-
-    fileab <- system.file("extdata", "quantiseq", paste0(signame,"_TCGA_aberrant_immune_genes.txt"),
+    fileab <- system.file("extdata", "quantiseq", 
+                          paste0(signame,"_TCGA_aberrant_immune_genes.txt"),
                           package="immunedeconv", mustWork=TRUE)
-
     if (rmgenes=="default") {
-      filerm <- system.file("extdata", "quantiseq", paste0(signame,"_rmgenes.txt"),
+      filerm <- system.file("extdata", "quantiseq", 
+                            paste0(signame,"_rmgenes.txt"),
                             package="immunedeconv", mustWork=TRUE)
     } else if (rmgenes=="path") {
-      filerm <- system.file("extdata", "quantiseq", paste0(signame,"rmgenes.txt"),
+      filerm <- system.file("extdata", "quantiseq", 
+                            paste0(signame,"rmgenes.txt"),
                             package="immunedeconv", mustWork=TRUE)
     }
-
-
   } else {
-
     sig.mat.file<-paste0(signame, "_signature.txt")
     mRNA.file<-paste0(signame, "_mRNA_scaling.txt")
-
-  }
-
-  if(is.numeric(mix.mat[[1,1]])!= TRUE){
-    stop("Wrong input format for the mixture matrix! Please follow the instructions of the documentation.")
   }
 
   # Load signature
-  sig.mat<-read.table(sig.mat.file, header=TRUE, sep="\t", row.names=1)
+  if(!sig.provided) {
+    sig.mat <- read.table(sig.mat.file, header=TRUE, sep="\t", row.names=1)
+  }
 
   # Load normalization factors (set all to 1 if mRNAscale==FALSE)
   if (mRNAscale) {
-
     mRNA<-read.table(mRNA.file,
                      sep="\t",
                      header=FALSE,
                      stringsAsFactors=FALSE)
     colnames(mRNA)<-c("celltype", "scaling")
-    mRNA<-as.vector(as.matrix(mRNA$scaling[match(colnames(sig.mat), mRNA$celltype)]))
-
+    # TODO make sure this works
+    mRNA <- as.vector(as.matrix(mRNA$scaling[match(colnames(sig.mat), mRNA$celltype)]))
   } else {
-
     mRNA<-rep(1, ncol(sig.mat))
-
   }
 
   # Preprocess mixture matrix
   message(paste0("Gene expression normalization and re-annotation (arrays: ",
     arrays, ")\n"))
-  mix.mat<-fixMixture(mix.mat, arrays=arrays)
+  mix.mat <- fixMixture(mix.mat, arrays=arrays)
 
   # Remove noisy genes
-  if (rmgenes!="none") {
-
-    if (signame %in% listsig) {
-
-      lrmgenes<-as.vector(read.table(filerm, header=FALSE, sep="\t")[,1])
-      n1<-nrow(sig.mat)
-      sig.mat<-sig.mat[!rownames(sig.mat) %in% lrmgenes,, drop=FALSE]
-      n2<-nrow(sig.mat)
-      message(paste0("Removing ", n1-n2, " noisy genes\n"))
-
-    }
+  if (rmgenes!="none" && signame %in% listsig) {
+    lrmgenes <- as.vector(read.table(filerm, header=FALSE, sep="\t")[,1])
+    n1 <- nrow(sig.mat)
+    sig.mat <- sig.mat[!rownames(sig.mat) %in% lrmgenes,, drop=FALSE]
+    n2 <- nrow(sig.mat)
+    message(paste0("Removing ", n1-n2, " noisy genes\n"))
   }
 
   # Fix tumor data
-  if (tumor) {
-
-    if (signame %in% listsig) {
-
-    abgenes<-as.vector(read.table(fileab, header=FALSE, sep="\t")[,1])
-    n1<-nrow(sig.mat)
-    sig.mat<-sig.mat[!rownames(sig.mat) %in% abgenes,, drop=FALSE]
-    n2<-nrow(sig.mat)
+  if (tumor && signame %in% listsig) {
+    abgenes <- as.vector(read.table(fileab, header=FALSE, sep="\t")[,1])
+    n1 <- nrow(sig.mat)
+    sig.mat <- sig.mat[!rownames(sig.mat) %in% abgenes,, drop=FALSE]
+    n2 <- nrow(sig.mat)
     message(paste0("Removing ", n1-n2, " genes with high expression in tumors\n"))
-
-    }
   }
 
   # Signature genes present in the mixture
