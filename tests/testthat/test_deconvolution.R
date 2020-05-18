@@ -4,17 +4,16 @@ test_mat = read_tsv("bulk_mat.tsv") %>%
 count_test_mat = read_tsv("counts_bulk_mat.tsv") %>% 
   as.data.frame() %>% 
   tibble::column_to_rownames("gene_symbol")
+quantiseq.perturb.sig = read.table("perturb_quant_sig.tsv", header=TRUE, 
+                                   sep="\t", row.names=1)
 
 test_that("timer works", {
   res = deconvolute_timer(test_mat, indications=rep("brca", ncol(test_mat)))
-  #assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
   expect_equal(ncol(res), ncol(test_mat), info="matrix dimensions consistent")
 })
 
 test_that("timer with multiple indications", {
   res = deconvolute_timer(test_mat, indications=c("brca", "brca", "brca", "chol", "chol", "chol", "chol", "chol"))
-  #assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
-  #assert("column order consistent", all(colnames(res) == colnames(test_mat)))
   expect_equal(ncol(res), ncol(test_mat), info="matrix dimensions consistent")
   expect_equal(colnames(res), colnames(test_mat), info="column order consistent")
 })
@@ -24,8 +23,6 @@ test_that("timer with multiple indications, unordered indication vector", {
     test_mat, 
     indications=c("brca", "brca", "brca", "chol", "chol", "blca", "brca", "brca")
   )
-  #assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
-  #assert("column order consistent", all(colnames(res) == colnames(test_mat)))
   expect_equal(ncol(res), ncol(test_mat), info="matrix dimensions consistent")
   expect_equal(colnames(res), colnames(test_mat), info="column order consistent")
 })
@@ -37,44 +34,41 @@ test_that("mcp_counter works", {
 
 test_that("epic works", {
   res = deconvolute_epic(test_mat, tumor=TRUE, scale_mrna=TRUE)
-  #assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
   expect_equal(ncol(res), ncol(test_mat), info="matrix dimensions consistent")
   res = deconvolute_epic(test_mat, tumor=FALSE, scale_mrna=FALSE)
-  #assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
   expect_equal(ncol(res), ncol(test_mat), info="matrix dimensions consistent")
 })
 
 test_that("quantiseq works", {
   res = deconvolute_quantiseq(test_mat, tumor=TRUE, arrays=FALSE, scale_mrna=TRUE)
-  #assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
   expect_equal(ncol(res), ncol(test_mat), info="matrix dimensions consistent")
   res = deconvolute_quantiseq(test_mat, tumor=FALSE, arrays=TRUE, scale_mrna=FALSE)
-  #assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
+  expect_equal(ncol(res), ncol(test_mat), info="matrix dimensions consistent")
+})
+
+test_that("quantiseq works with custom signature", {
+  res = deconvolute_quantiseq(test_mat, tumor=TRUE, arrays=FALSE, 
+                              scale_mrna=TRUE, signame=quantiseq.perturb.sig)
   expect_equal(ncol(res), ncol(test_mat), info="matrix dimensions consistent")
 })
 
 test_that("xcell works", {
   res = deconvolute_xcell(test_mat, arrays=FALSE)
-  #assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
   expect_equal(ncol(res), ncol(test_mat), info="matrix dimensions consistent")
   res = deconvolute_xcell(test_mat, arrays=TRUE)
-  #assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
   expect_equal(ncol(res), ncol(test_mat), info="matrix dimensions consistent")
 })
 
 test_that("eigengene works", {
   res = deconvolute_eigengene(count_test_mat)
-  #assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
   expect_equal(ncol(res), ncol(test_mat), info="matrix dimensions consistent")
 })
 
 test_that("xcell works with reduced set of expected cell types", {
   expected_cell_types = c("T cell CD4+", "T cell CD8+", "Myeloid dendritic cell", "Macrophage M1", "Macrophage M2")
   res = deconvolute_xcell(test_mat, arrays=FALSE, expected_cell_types)
-  #assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
   expect_equal(ncol(res), ncol(test_mat), info="matrix dimensions consistent")
   res = deconvolute_xcell(test_mat, arrays=TRUE, expected_cell_types)
-  #assert("matrix dimensions consistent", ncol(res) == ncol(test_mat))
   expect_equal(ncol(res), ncol(test_mat), info="matrix dimensions consistent")
 })
 
@@ -95,9 +89,6 @@ test_that("generic deconvolution works for all methods", {
         scale_mrna=FALSE
       )
       # matrix has the 'cell type' column -> +1
-      #assert("matrix dimensions consistent", ncol(res) == ncol(test_mat) + 1)
-      #assert("cell type column exists", colnames(res)[1] == "cell_type")
-      #assert("sample names consistent with input", colnames(res)[-1] == colnames(test_mat))
       expect_equal(ncol(res), ncol(test_mat)+1, info="matrix dimensions consistent")
       expect_equal(colnames(res)[1], "cell_type", info="cell type column exists")
       expect_equal(colnames(res)[-1], colnames(test_mat), 
