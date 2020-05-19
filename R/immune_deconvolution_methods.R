@@ -276,7 +276,6 @@ deconvolute_cibersort = function(gene_expression_matrix,
 #'
 #' @export
 #' TODO finish documentation
-#' TODO add unit tests
 #' TODO move this into its own file and make this function use rlang call
 deconvolute_eigengene = function(gene_expression_matrix,
                                  m_signature=eig.sig, 
