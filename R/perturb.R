@@ -1,3 +1,13 @@
+#' Functions for perturbing cell-type x gene signatures for simulations
+#'
+#' @import dplyr
+#' @import purrr
+#' @import tidyr
+#' @import tibble
+#' 
+#' @name perturb
+NULL
+
 #' @param signature data.frame where first column is gene, 
 #'   second column is cell type, third columns value for that gene,type pair
 #'   third column is optional
@@ -5,7 +15,12 @@
 #' @param return_melted boolean whether to return the signature matrix in
 #'   melted format or not. If `FALSE`, returns n_gene x n_cell_type data.frame
 #'
-#' @import tidyverse
+#' @import dplyr
+#' @import purrr
+#' @import tidyr
+#' @import tibble
+#' 
+#' @name truncate_signature
 #' @export
 truncate_signature = function(signature, n_gene_rm, return_melted=TRUE) {
   cl.sig <- as_tibble(signature)
@@ -35,7 +50,7 @@ truncate_signature = function(signature, n_gene_rm, return_melted=TRUE) {
  
   # Merge in values if we need them
   if(ncol(cl.sig) == 3) {
-    perturb.sig <- left_join(perturb.sig, cl.sig) 
+    perturb.sig <- left_join(perturb.sig, cl.sig, by=c("gene","cell_type")) 
   }
   
   if(!return_melted) {

@@ -9,6 +9,9 @@ Depends:
     EPIC
 Imports:
     dplyr (>= 0.7),
+    tidyr,
+    purrr,
+    DESeq,
     magrittr (>= 1.5),
     readr (>= 1.1),
     readxl (>= 1.0),

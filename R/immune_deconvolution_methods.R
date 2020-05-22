@@ -9,6 +9,7 @@
 #' @import DESeq
 #' @importFrom testit assert
 #' @import readr
+#' @import Biobase
 #' @importFrom tibble as_tibble
 #' @importFrom EPIC EPIC
 #' @importFrom rlang dots_list
@@ -272,15 +273,14 @@ deconvolute_cibersort = function(gene_expression_matrix,
 #' @param min_samples_w_count Removes genes where there are less than 
 #'   `min_count_sample[1]` samples with more than `min_count_sample[2]` counts
 #' 
-#' @return 
-#'
+#' @import DESeq
 #' @export
-#' TODO finish documentation
-#' TODO move this into its own file and make this function use rlang call
 deconvolute_eigengene = function(gene_expression_matrix,
                                  m_signature=eig.sig, 
                                  min_count=100,
                                  min_samples_w_count=c(2,5)) {
+  # TODO finish documentation
+  # TODO move this into its own file and make this function use rlang call
   # Validity checks
   assert("min_count must be numeric", is.numeric(min_count))
   assert("min_samples_w_count must be numeric of length w", 
@@ -318,19 +318,22 @@ deconvolute_eigengene = function(gene_expression_matrix,
     if(length(tcellgenes) != 0) {
       # Get subset of normalized rna-seq 
       subcenteredDat <- centeredDat[rownames(centeredDat) %in% tcellgenes,]
-      svdRes <- svd(subcenteredDat) # (D, U, V) where X = UDV', U decreasing order
-      #svdRes$v[,1]
-      #table(svdRes$u[,1] > 0)
-      
-      spikeinDat <- cbind(max=apply(subcenteredDat, 1, max), subcenteredDat)
-      svdRes.spikein <- svd(spikeinDat)
-      if(sign(svdRes$v[,1][1])==sign(svdRes.spikein$v[,1][2])) {
-        svdRes$v[,1] = svdRes$v[,1] * sign(svdRes.spikein$v[,1][1])
+      if(is.null(dim(subcenteredDat))) {
+        results[i,] <- NA
       } else {
-        svdRes$v[,1] = svdRes$v[,1] * sign(svdRes.spikein$v[,1][1]) *(-1)
+        svdRes <- svd(subcenteredDat) # (D, U, V) where X = UDV', U decreasing order
+        #svdRes$v[,1]
+        #table(svdRes$u[,1] > 0)
+        spikeinDat <- cbind(max=apply(subcenteredDat, 1, max), subcenteredDat)
+        svdRes.spikein <- svd(spikeinDat)
+        if(sign(svdRes$v[,1][1])==sign(svdRes.spikein$v[,1][2])) {
+          svdRes$v[,1] = svdRes$v[,1] * sign(svdRes.spikein$v[,1][1])
+        } else {
+          svdRes$v[,1] = svdRes$v[,1] * sign(svdRes.spikein$v[,1][1]) *(-1)
+        }
+        
+        results[i,] <- svdRes$v[,1]
       }
-      
-      results[i,] <- svdRes$v[,1]
     } else {
       results[i,] <- NA
     }

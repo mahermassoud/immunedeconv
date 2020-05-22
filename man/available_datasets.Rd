@@ -5,7 +5,7 @@
 \alias{available_datasets}
 \title{Available methods and datasets.}
 \format{
-An object of class \code{character} of length 13.
+An object of class \code{character} of length 14.
 }
 \usage{
 available_datasets
