@@ -251,7 +251,8 @@ deconvolute_cibersort = function(gene_expression_matrix,
   tmp_mat = tempfile()
   write_tsv(as_tibble(gene_expression_matrix, rownames="gene_symbol"), path=tmp_mat)
 
-  arguments = dots_list(get("cibersort_mat", envir=config_env), tmp_mat, perm=0,
+  arguments = dots_list(sig_matrix=get("cibersort_mat", envir=config_env), 
+                        mixture_file=tmp_mat, perm=0,
                         QN=quantile_norm, absolute=absolute, abs_method=abs_method, ..., .homonyms="last")
   call = rlang::call2(CIBERSORT, !!!arguments)
   res = eval(call)
