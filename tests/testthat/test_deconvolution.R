@@ -4,8 +4,19 @@ test_mat = read_tsv("bulk_mat.tsv") %>%
 count_test_mat = read_tsv("counts_bulk_mat.tsv") %>% 
   as.data.frame() %>% 
   tibble::column_to_rownames("gene_symbol")
+f_count_test_mat = read_tsv("counts_bulk_mat_dec.tsv") %>% 
+  as.data.frame() %>% 
+  tibble::column_to_rownames("gene_symbol")
 quantiseq.perturb.sig = read.table("perturb_quant_sig.tsv", header=TRUE, 
                                    sep="\t", row.names=1)
+
+test_that("eigengene works", {
+  res = deconvolute_eigengene(count_test_mat)
+  expect_equal(ncol(res), ncol(test_mat), info="matrix dimensions consistent")
+  
+  res = deconvolute_eigengene(f_count_test_mat)
+  expect_equal(ncol(res), ncol(test_mat), info="matrix dimensions consistent")
+})
 
 test_that("timer works", {
   res = deconvolute_timer(test_mat, indications=rep("brca", ncol(test_mat)))
@@ -59,10 +70,6 @@ test_that("xcell works", {
   expect_equal(ncol(res), ncol(test_mat), info="matrix dimensions consistent")
 })
 
-test_that("eigengene works", {
-  res = deconvolute_eigengene(count_test_mat)
-  expect_equal(ncol(res), ncol(test_mat), info="matrix dimensions consistent")
-})
 
 test_that("xcell works with reduced set of expected cell types", {
   expected_cell_types = c("T cell CD4+", "T cell CD8+", "Myeloid dendritic cell", "Macrophage M1", "Macrophage M2")

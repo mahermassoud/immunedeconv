@@ -288,6 +288,8 @@ deconvolute_eigengene = function(gene_expression_matrix,
          is.numeric(min_samples_w_count) && length(min_samples_w_count) == 2)
   
   f_expr = gene_expression_matrix[rowSums(gene_expression_matrix) > min_count,]
+  f_expr <- as.matrix(f_expr)
+  storage.mode(f_expr) <- "integer"
   fake_metadata <- rep("", ncol(f_expr))
   cds = newCountDataSet(f_expr,  fake_metadata) # TODO need metadata
   cds = estimateSizeFactors(cds)
