@@ -308,16 +308,18 @@ deconvolute_eigengene = function(gene_expression_matrix,
   results <- matrix(0, length(tcelllist), ncol(f_expr))
   # for each cell type
   for(i in 1:length(tcelllist)) {
-    
     tcellgenes <- m_signature[m_signature$cell_type == tcelllist[i],]$gene
     subCount <- f_expr[match(tcellgenes, rownames(f_expr)),]
-    # Remove genes with less than ms samples with more than mc counts
-    ms = min_samples_w_count[1]
-    mc = min_samples_w_count[2]
-    filter <- apply(subCount, 1, function(x) length(x[x > mc]) >= ms)
-    subCount <- subCount[filter,]
-    tcellgenes <- rownames(subCount)
-    
+    if(is.null(dim(subCount))) { # If we only have 0 or 1 matching genes
+      results[i,] <- NA
+    } else {
+      # Remove genes with less than ms samples with more than mc counts
+      ms = min_samples_w_count[1]
+      mc = min_samples_w_count[2]
+      filter <- apply(subCount, 1, function(x) length(x[x > mc]) >= ms)
+      subCount <- subCount[filter,]
+      tcellgenes <- rownames(subCount)
+    }
     if(length(tcellgenes) != 0) {
       # Get subset of normalized rna-seq 
       subcenteredDat <- centeredDat[rownames(centeredDat) %in% tcellgenes,]
