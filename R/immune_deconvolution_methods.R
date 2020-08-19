@@ -267,9 +267,11 @@ deconvolute_cibersort = function(gene_expression_matrix,
 #'
 #' @param gene_expression_matrix m x n matrix (m genes, n samples) of **counts**
 #'   not tpm. rownames must match genes in signature
-#' @param m_signature data.frame with 2 columns gene, cell_type. Represents
+#' @param m_signature data.frame where first two columns 
+#'   are gene, cell_type. Represents
 #'   which genes are in signature for which cell type. Default: 
-#'   signature from *Charoentong et. al. 2017*
+#'   signature from *Charoentong et. al. 2017*. Optional third column 'value'
+#'   only gene-cell_type pairs with nonzero values are used
 #' @param min_count minimum number of reads a gene needs to be considered
 #' @param min_samples_w_count Removes genes where there are less than 
 #'   `min_count_sample[1]` samples with more than `min_count_sample[2]` counts
@@ -302,6 +304,9 @@ deconvolute_eigengene = function(gene_expression_matrix,
   colnames(m_signature)[2] = "cell_type"
   sig_raw = m_signature
   m_signature <- m_signature[m_signature$gene %in% rownames(f_expr),]
+  if(ncol(m_signature >= 3)) {
+    m_signature <- m_signature %>% filter(value > 0)
+  }
   tcelllist <- unique(m_signature$cell_type)
   
   # results is n_cell_type x n_sample
