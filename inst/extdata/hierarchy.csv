@@ -1,28 +1,46 @@
-level1,level2,level3,level4,level5,level6,level7,level8,hi_level
-cell,immune cell,lymphoid,T cell,T cell CD8+,T cell CD8+ naive,T cell CD8+ naive,T cell CD8+ naive,6
-cell,immune cell,lymphoid,T cell,T cell CD8+,T cell CD8+ memory,T cell CD8+ memory,T cell CD8+ memory,6
-cell,immune cell,lymphoid,T cell,T cell CD4+,T cell CD4+ (non-regulatory),T cell CD4+ naive,T cell CD4+ naive,7
-cell,immune cell,lymphoid,T cell,T cell CD4+,T cell CD4+ (non-regulatory),T cell CD4+ memory,T cell CD4+ memory resting,8
-cell,immune cell,lymphoid,T cell,T cell CD4+,T cell CD4+ (non-regulatory),T cell CD4+ memory,T cell CD4+ memory activated,8
-cell,immune cell,lymphoid,T cell,T cell CD4+,T cell CD4+ (non-regulatory),T cell follicular helper,T cell follicular helper,7
-cell,immune cell,lymphoid,T cell,T cell CD4+,T cell regulatory (Tregs),T cell regulatory (Tregs),T cell regulatory (Tregs),6
-cell,immune cell,lymphoid,T cell,T cell gamma delta,T cell gamma delta,T cell gamma delta,T cell gamma delta,5
-cell,immune cell,lymphoid,B cell,B cell naive,B cell naive,B cell naive,B cell naive,5
-cell,immune cell,lymphoid,B cell,B cell memory,B cell memory,B cell memory,B cell memory,5
-cell,immune cell,lymphoid,B cell,B cell plasma,B cell plasma,B cell plasma,B cell plasma,5
-cell,immune cell,lymphoid,NK cell,NK cell resting,NK cell resting,NK cell resting,NK cell resting,5
-cell,immune cell,lymphoid,NK cell,NK cell activated,NK cell activated,NK cell activated,NK cell activated,5
-cell,immune cell,myeloid,Neutrophil,Neutrophil,Neutrophil,Neutrophil,Neutrophil,4
-cell,immune cell,myeloid,Eosinophil,Eosinophil,Eosinophil,Eosinophil,Eosinophil,4
-cell,immune cell,myeloid,Mast cell,Mast cell resting,Mast cell resting,Mast cell resting,Mast cell resting,5
-cell,immune cell,myeloid,Mast cell,Mast cell activated,Mast cell activated,Mast cell activated,Mast cell activated,5
-cell,immune cell,myeloid,Monocytic lineage,Macrophage/Monocyte,Monocyte,Monocyte,Monocyte,6
-cell,immune cell,myeloid,Monocytic lineage,Macrophage/Monocyte,Macrophage,Macrophage M0,Macrophage M0,7
-cell,immune cell,myeloid,Monocytic lineage,Macrophage/Monocyte,Macrophage,Macrophage M1,Macrophage M1,7
-cell,immune cell,myeloid,Monocytic lineage,Macrophage/Monocyte,Macrophage,Macrophage M2,Macrophage M2,7
-cell,immune cell,myeloid,Monocytic lineage,Dendritic cell,Dendritic cell resting,Dendritic cell resting,Dendritic cell resting,6
-cell,immune cell,myeloid,Monocytic lineage,Dendritic cell,Dendritic cell activated,Dendritic cell activated,Dendritic cell activated,6
-cell,other cell,Endothelial cell,Endothelial cell,Endothelial cell,Endothelial cell,Endothelial cell,Endothelial cell,3
-cell,other cell,Cancer associated fibroblast,Cancer associated fibroblast,Cancer associated fibroblast,Cancer associated fibroblast,Cancer associated fibroblast,Cancer associated fibroblast,3
-cell,other cell,cancer cell,Ovarian carcinoma cell,Ovarian carcinoma cell,Ovarian carcinoma cell,Ovarian carcinoma cell,Ovarian carcinoma cell,4
-cell,other cell,cancer cell,Melanoma cell,Melanoma cell,Melanoma cell,Melanoma cell,Melanoma cell,4
+level1,level2,level3,level4,level5,level6,level7,level8,level9
+root2,cell,immune cell,lymphoid,Hematopoietic stem cell,Hematopoietic stem cell,Hematopoietic stem cell,Hematopoietic stem cell,Hematopoietic stem cell
+root2,cell,immune cell,lymphoid,T cell,T cell CD8+,T cell CD8+ naive,T cell CD8+ naive,T cell CD8+ naive
+root2,cell,immune cell,lymphoid,T cell,T cell CD8+,T cell CD8+ memory,T cell CD8+ memory,T cell CD8+ central memory
+root3,cell,immune cell,lymphoid,T cell,T cell CD8+,T cell CD8+ memory,T cell CD8+ memory,T cell CD8+ effector memory
+root2,cell,immune cell,lymphoid,T cell,T cell CD4+,T cell CD4+ (non-regulatory),T cell CD4+ naive,T cell CD4+ naive
+root2,cell,immune cell,lymphoid,T cell,T cell CD4+,T cell CD4+ (non-regulatory),T cell CD4+ memory,T cell CD4+ memory resting
+root2,cell,immune cell,lymphoid,T cell,T cell CD4+,T cell CD4+ (non-regulatory),T cell CD4+ memory,T cell CD4+ memory activated
+root2,cell,immune cell,lymphoid,T cell,T cell CD4+,T cell CD4+ (non-regulatory),T cell CD4+ memory,T cell CD4+ central memory
+root2,cell,immune cell,lymphoid,T cell,T cell CD4+,T cell CD4+ (non-regulatory),T cell CD4+ memory,T cell CD4+ effector memory
+root2,cell,immune cell,lymphoid,T cell,T cell CD4+,T cell CD4+ (non-regulatory),T cell follicular helper,T cell follicular helper
+root2,cell,immune cell,lymphoid,T cell,T cell CD4+,T cell CD4+ (non-regulatory),T cell CD4+ Th1,T cell CD4+ Th1
+root2,cell,immune cell,lymphoid,T cell,T cell CD4+,T cell CD4+ (non-regulatory),T cell CD4+ Th2,T cell CD4+ Th2
+root2,cell,immune cell,lymphoid,T cell,T cell CD4+,T cell regulatory (Tregs),T cell regulatory (Tregs),T cell regulatory (Tregs)
+root2,cell,immune cell,lymphoid,T cell,T cell gamma delta,T cell gamma delta,T cell gamma delta,T cell gamma delta
+root2,cell,immune cell,lymphoid,T cell,T cell NK,T cell NK,T cell NK,T cell NK
+root2,cell,immune cell,lymphoid,B cell,B cell naive,B cell naive,B cell naive,B cell naive
+root2,cell,immune cell,lymphoid,B cell,B cell memory,B cell memory,B cell memory,B cell memory
+root2,cell,immune cell,lymphoid,B cell,B cell plasma,B cell plasma,B cell plasma,B cell plasma
+root2,cell,immune cell,lymphoid,B cell,Class-switched memory B cell,Class-switched memory B cell,Class-switched memory B cell,Class-switched memory B cell
+root2,cell,immune cell,lymphoid,Common lymphoid progenitor,Common lymphoid progenitor,Common lymphoid progenitor,Common lymphoid progenitor,Common lymphoid progenitor
+root2,cell,immune cell,lymphoid,NK cell,NK cell resting,NK cell resting,NK cell resting,NK cell resting
+root2,cell,immune cell,lymphoid,NK cell,NK cell activated,NK cell activated,NK cell activated,NK cell activated
+root2,cell,immune cell,lymphoid,Plasmacytoid dendritic cell,Plasmacytoid dendritic cell,Plasmacytoid dendritic cell,Plasmacytoid dendritic cell,Plasmacytoid dendritic cell
+root2,cell,immune cell,myeloid,Neutrophil,Neutrophil,Neutrophil,Neutrophil,Neutrophil
+root2,cell,immune cell,myeloid,Basophil,Basophil,Basophil,Basophil,Basophil
+root2,cell,immune cell,myeloid,Common myeloid progenitor,Common myeloid progenitor,Common myeloid progenitor,Common myeloid progenitor,Common myeloid progenitor
+root2,cell,immune cell,myeloid,Granulocyte-monocyte progenitor,Granulocyte-monocyte progenitor,Granulocyte-monocyte progenitor,Granulocyte-monocyte progenitor,Granulocyte-monocyte progenitor
+root2,cell,immune cell,myeloid,Eosinophil,Eosinophil,Eosinophil,Eosinophil,Eosinophil
+root2,cell,immune cell,myeloid,Mast cell,Mast cell resting,Mast cell resting,Mast cell resting,Mast cell resting
+root2,cell,immune cell,myeloid,Mast cell,Mast cell activated,Mast cell activated,Mast cell activated,Mast cell activated
+root2,cell,immune cell,myeloid,Monocytic lineage,Macrophage/Monocyte,Monocyte,Monocyte,Monocyte
+root2,cell,immune cell,myeloid,Monocytic lineage,Macrophage/Monocyte,Macrophage,Macrophage M0,Macrophage M0
+root2,cell,immune cell,myeloid,Monocytic lineage,Macrophage/Monocyte,Macrophage,Macrophage M1,Macrophage M1
+root2,cell,immune cell,myeloid,Monocytic lineage,Macrophage/Monocyte,Macrophage,Macrophage M2,Macrophage M2
+root2,cell,immune cell,myeloid,Monocytic lineage,Myeloid dendritic cell,Myeloid dendritic cell resting,Myeloid dendritic cell resting,Myeloid dendritic cell resting
+root2,cell,immune cell,myeloid,Monocytic lineage,Myeloid dendritic cell,Myeloid dendritic cell activated,Myeloid dendritic cell activated,Myeloid dendritic cell activated
+root2,cell,other cell,Endothelial cell,Endothelial cell,Endothelial cell,Endothelial cell,Endothelial cell,Endothelial cell
+root2,cell,other cell,Cancer associated fibroblast,Cancer associated fibroblast,Cancer associated fibroblast,Cancer associated fibroblast,Cancer associated fibroblast,Cancer associated fibroblast
+root2,cell,other cell,cancer cell,Ovarian carcinoma cell,Ovarian carcinoma cell,Ovarian carcinoma cell,Ovarian carcinoma cell,Ovarian carcinoma cell
+root2,cell,other cell,cancer cell,Melanoma cell,Melanoma cell,Melanoma cell,Melanoma cell,Melanoma cell
+root3,cell,other cell,uncharacterized cell,uncharacterized cell,uncharacterized cell,uncharacterized cell,uncharacterized cell,uncharacterized cell
+root2,score,cytotoxicity score,cytotoxicity score,cytotoxicity score,cytotoxicity score,cytotoxicity score,cytotoxicity score,cytotoxicity score
+root2,score,immune score,immune score,immune score,immune score,immune score,immune score,immune score
+root2,score,microenvironment score,microenvironment score,microenvironment score,microenvironment score,microenvironment score,microenvironment score,microenvironment score
+root2,score,stroma score,stroma score,stroma score,stroma score,stroma score,stroma score,stroma score

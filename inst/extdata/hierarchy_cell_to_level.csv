@@ -1,113 +1,68 @@
 cell_type,level
-cell,1
-immune cell,2
-lymphoid,3
-T cell,4
-T cell CD8+,5
-T cell CD8+ naive,6
-T cell CD8+ naive,7
-T cell CD8+ naive,8
-T cell CD8+ memory,6
-T cell CD8+ memory,7
+B cell,5
+B cell memory,9
+B cell naive,9
+B cell plasma,9
+Basophil,9
+Cancer associated fibroblast,9
+cancer cell,4
+cell,2
+Class-switched memory B cell,9
+Common lymphoid progenitor,9
+Common myeloid progenitor,9
+cytotoxicity score,9
+Endothelial cell,9
+Eosinophil,9
+Granulocyte-monocyte progenitor,9
+Hematopoietic stem cell,9
+immune cell,3
+immune score,9
+lymphoid,4
+Macrophage,7
+Macrophage M0,9
+Macrophage M1,9
+Macrophage M2,9
+Macrophage/Monocyte,6
+Mast cell,5
+Mast cell activated,9
+Mast cell resting,9
+Melanoma cell,9
+microenvironment score,9
+Monocyte,9
+Monocytic lineage,5
+myeloid,4
+Myeloid dendritic cell,6
+Myeloid dendritic cell activated,9
+Myeloid dendritic cell resting,9
+Neutrophil,9
+NK cell,5
+NK cell activated,9
+NK cell resting,9
+other cell,3
+Ovarian carcinoma cell,9
+Plasmacytoid dendritic cell,9
+root2,1
+root3,1
+score,2
+stroma score,9
+T cell,5
+T cell CD4+,6
+T cell CD4+ (non-regulatory),7
+T cell CD4+ central memory,9
+T cell CD4+ effector memory,9
+T cell CD4+ memory,8
+T cell CD4+ memory activated,9
+T cell CD4+ memory resting,9
+T cell CD4+ naive,9
+T cell CD4+ Th1,9
+T cell CD4+ Th2,9
+T cell CD8+,6
+T cell CD8+ central memory,9
+T cell CD8+ effector memory,9
 T cell CD8+ memory,8
-T cell CD4+,5
-T cell CD4+ (non-regulatory),6
-T cell CD4+ naive,7
-T cell CD4+ naive,8
-T cell CD4+ memory,7
-T cell CD4+ memory resting,8
-T cell CD4+ memory activated,8
-T cell follicular helper,7
-T cell follicular helper,8
-T cell regulatory (Tregs),6
-T cell regulatory (Tregs),7
-T cell regulatory (Tregs),8
-T cell gamma delta,5
-T cell gamma delta,6
-T cell gamma delta,7
-T cell gamma delta,8
-B cell,4
-B cell naive,5
-B cell naive,6
-B cell naive,7
-B cell naive,8
-B cell memory,5
-B cell memory,6
-B cell memory,7
-B cell memory,8
-B cell plasma,5
-B cell plasma,6
-B cell plasma,7
-B cell plasma,8
-NK cell,4
-NK cell resting,5
-NK cell resting,6
-NK cell resting,7
-NK cell resting,8
-NK cell activated,5
-NK cell activated,6
-NK cell activated,7
-NK cell activated,8
-myeloid,3
-Neutrophil,4
-Neutrophil,5
-Neutrophil,6
-Neutrophil,7
-Neutrophil,8
-Eosinophil,4
-Eosinophil,5
-Eosinophil,6
-Eosinophil,7
-Eosinophil,8
-Mast cell,4
-Mast cell resting,5
-Mast cell resting,6
-Mast cell resting,7
-Mast cell resting,8
-Mast cell activated,5
-Mast cell activated,6
-Mast cell activated,7
-Mast cell activated,8
-Monocytic lineage,4
-Macrophage/Monocyte,5
-Monocyte,6
-Monocyte,7
-Monocyte,8
-Macrophage,6
-Macrophage M0,7
-Macrophage M0,8
-Macrophage M1,7
-Macrophage M1,8
-Macrophage M2,7
-Macrophage M2,8
-Dendritic cell,5
-Dendritic cell resting,6
-Dendritic cell resting,7
-Dendritic cell resting,8
-Dendritic cell activated,6
-Dendritic cell activated,7
-Dendritic cell activated,8
-other cell,2
-Endothelial cell,3
-Endothelial cell,4
-Endothelial cell,5
-Endothelial cell,6
-Endothelial cell,7
-Endothelial cell,8
-Cancer associated fibroblast,3
-Cancer associated fibroblast,4
-Cancer associated fibroblast,5
-Cancer associated fibroblast,6
-Cancer associated fibroblast,7
-Cancer associated fibroblast,8
-cancer cell,3
-Ovarian carcinoma cell,4
-Ovarian carcinoma cell,5
-Ovarian carcinoma cell,6
-Ovarian carcinoma cell,7
-Ovarian carcinoma cell,8
-Melanoma cell,4
-Melanoma cell,5
-Melanoma cell,6
-Melanoma cell,7
-Melanoma cell,8
+T cell CD8+ naive,9
+T cell follicular helper,9
+T cell gamma delta,9
+T cell NK,9
+T cell regulatory (Tregs),9
+uncharacterized cell,9
