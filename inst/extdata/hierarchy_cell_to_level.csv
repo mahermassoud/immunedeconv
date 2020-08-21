@@ -1,0 +1,113 @@
+cell_type,level
+cell,1
+immune cell,2
+lymphoid,3
+T cell,4
+T cell CD8+,5
+T cell CD8+ naive,6
+T cell CD8+ naive,7
+T cell CD8+ naive,8
+T cell CD8+ memory,6
+T cell CD8+ memory,7
+T cell CD8+ memory,8
+T cell CD4+,5
+T cell CD4+ (non-regulatory),6
+T cell CD4+ naive,7
+T cell CD4+ naive,8
+T cell CD4+ memory,7
+T cell CD4+ memory resting,8
+T cell CD4+ memory activated,8
+T cell follicular helper,7
+T cell follicular helper,8
+T cell regulatory (Tregs),6
+T cell regulatory (Tregs),7
+T cell regulatory (Tregs),8
+T cell gamma delta,5
+T cell gamma delta,6
+T cell gamma delta,7
+T cell gamma delta,8
+B cell,4
+B cell naive,5
+B cell naive,6
+B cell naive,7
+B cell naive,8
+B cell memory,5
+B cell memory,6
+B cell memory,7
+B cell memory,8
+B cell plasma,5
+B cell plasma,6
+B cell plasma,7
+B cell plasma,8
+NK cell,4
+NK cell resting,5
+NK cell resting,6
+NK cell resting,7
+NK cell resting,8
+NK cell activated,5
+NK cell activated,6
+NK cell activated,7
+NK cell activated,8
+myeloid,3
+Neutrophil,4
+Neutrophil,5
+Neutrophil,6
+Neutrophil,7
+Neutrophil,8
+Eosinophil,4
+Eosinophil,5
+Eosinophil,6
+Eosinophil,7
+Eosinophil,8
+Mast cell,4
+Mast cell resting,5
+Mast cell resting,6
+Mast cell resting,7
+Mast cell resting,8
+Mast cell activated,5
+Mast cell activated,6
+Mast cell activated,7
+Mast cell activated,8
+Monocytic lineage,4
+Macrophage/Monocyte,5
+Monocyte,6
+Monocyte,7
+Monocyte,8
+Macrophage,6
+Macrophage M0,7
+Macrophage M0,8
+Macrophage M1,7
+Macrophage M1,8
+Macrophage M2,7
+Macrophage M2,8
+Dendritic cell,5
+Dendritic cell resting,6
+Dendritic cell resting,7
+Dendritic cell resting,8
+Dendritic cell activated,6
+Dendritic cell activated,7
+Dendritic cell activated,8
+other cell,2
+Endothelial cell,3
+Endothelial cell,4
+Endothelial cell,5
+Endothelial cell,6
+Endothelial cell,7
+Endothelial cell,8
+Cancer associated fibroblast,3
+Cancer associated fibroblast,4
+Cancer associated fibroblast,5
+Cancer associated fibroblast,6
+Cancer associated fibroblast,7
+Cancer associated fibroblast,8
+cancer cell,3
+Ovarian carcinoma cell,4
+Ovarian carcinoma cell,5
+Ovarian carcinoma cell,6
+Ovarian carcinoma cell,7
+Ovarian carcinoma cell,8
+Melanoma cell,4
+Melanoma cell,5
+Melanoma cell,6
+Melanoma cell,7
+Melanoma cell,8

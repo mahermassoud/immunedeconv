@@ -1,0 +1,28 @@
+level1,level2,level3,level4,level5,level6,level7,level8,hi_level
+cell,immune cell,lymphoid,T cell,T cell CD8+,T cell CD8+ naive,T cell CD8+ naive,T cell CD8+ naive,6
+cell,immune cell,lymphoid,T cell,T cell CD8+,T cell CD8+ memory,T cell CD8+ memory,T cell CD8+ memory,6
+cell,immune cell,lymphoid,T cell,T cell CD4+,T cell CD4+ (non-regulatory),T cell CD4+ naive,T cell CD4+ naive,7
+cell,immune cell,lymphoid,T cell,T cell CD4+,T cell CD4+ (non-regulatory),T cell CD4+ memory,T cell CD4+ memory resting,8
+cell,immune cell,lymphoid,T cell,T cell CD4+,T cell CD4+ (non-regulatory),T cell CD4+ memory,T cell CD4+ memory activated,8
+cell,immune cell,lymphoid,T cell,T cell CD4+,T cell CD4+ (non-regulatory),T cell follicular helper,T cell follicular helper,7
+cell,immune cell,lymphoid,T cell,T cell CD4+,T cell regulatory (Tregs),T cell regulatory (Tregs),T cell regulatory (Tregs),6
+cell,immune cell,lymphoid,T cell,T cell gamma delta,T cell gamma delta,T cell gamma delta,T cell gamma delta,5
+cell,immune cell,lymphoid,B cell,B cell naive,B cell naive,B cell naive,B cell naive,5
+cell,immune cell,lymphoid,B cell,B cell memory,B cell memory,B cell memory,B cell memory,5
+cell,immune cell,lymphoid,B cell,B cell plasma,B cell plasma,B cell plasma,B cell plasma,5
+cell,immune cell,lymphoid,NK cell,NK cell resting,NK cell resting,NK cell resting,NK cell resting,5
+cell,immune cell,lymphoid,NK cell,NK cell activated,NK cell activated,NK cell activated,NK cell activated,5
+cell,immune cell,myeloid,Neutrophil,Neutrophil,Neutrophil,Neutrophil,Neutrophil,4
+cell,immune cell,myeloid,Eosinophil,Eosinophil,Eosinophil,Eosinophil,Eosinophil,4
+cell,immune cell,myeloid,Mast cell,Mast cell resting,Mast cell resting,Mast cell resting,Mast cell resting,5
+cell,immune cell,myeloid,Mast cell,Mast cell activated,Mast cell activated,Mast cell activated,Mast cell activated,5
+cell,immune cell,myeloid,Monocytic lineage,Macrophage/Monocyte,Monocyte,Monocyte,Monocyte,6
+cell,immune cell,myeloid,Monocytic lineage,Macrophage/Monocyte,Macrophage,Macrophage M0,Macrophage M0,7
+cell,immune cell,myeloid,Monocytic lineage,Macrophage/Monocyte,Macrophage,Macrophage M1,Macrophage M1,7
+cell,immune cell,myeloid,Monocytic lineage,Macrophage/Monocyte,Macrophage,Macrophage M2,Macrophage M2,7
+cell,immune cell,myeloid,Monocytic lineage,Dendritic cell,Dendritic cell resting,Dendritic cell resting,Dendritic cell resting,6
+cell,immune cell,myeloid,Monocytic lineage,Dendritic cell,Dendritic cell activated,Dendritic cell activated,Dendritic cell activated,6
+cell,other cell,Endothelial cell,Endothelial cell,Endothelial cell,Endothelial cell,Endothelial cell,Endothelial cell,3
+cell,other cell,Cancer associated fibroblast,Cancer associated fibroblast,Cancer associated fibroblast,Cancer associated fibroblast,Cancer associated fibroblast,Cancer associated fibroblast,3
+cell,other cell,cancer cell,Ovarian carcinoma cell,Ovarian carcinoma cell,Ovarian carcinoma cell,Ovarian carcinoma cell,Ovarian carcinoma cell,4
+cell,other cell,cancer cell,Melanoma cell,Melanoma cell,Melanoma cell,Melanoma cell,Melanoma cell,4
